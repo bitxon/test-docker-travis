@@ -3,5 +3,14 @@ services:
     - docker
 
 script:
-    - docker build -t travis-test-learn7/node .
-    - docker images travis-test-learn7/node
+    - docker build -t bitxon/travis-docker-test-node .
+    - docker images bitxon/travis-docker-test-node
+
+before_deploy:
+    - docker login -u $DOC_H_USR -p $DOC_H_PSWD
+
+deploy:
+    provider: script
+    script: docker push bitxon/travis-docker-test-node
+    on:
+        branch: master
